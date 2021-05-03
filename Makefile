@@ -16,4 +16,4 @@ heroku: $(DOCKER_CMD)
 .PHONY: gci
 gci:
 	@echo "Executing gci"
-	@gci -w -local github.com/mercadolibre/fury_credits-debt-crm-sync $(PACKAGES_PATH)
+	@gci -w -local github.com/switch-coders/tango-sync $(PACKAGES_PATH)
