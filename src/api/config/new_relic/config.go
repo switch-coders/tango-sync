@@ -18,8 +18,8 @@ func Init() (*newrelic.Application, error) {
 	}
 
 	return newrelic.NewApplication(
-		newrelic.ConfigAppName("master.tango-sync"),
-		newrelic.ConfigLicense("42f8705fa3ae7feb35621fc56b973691ee4cNRAL"),
+		newrelic.ConfigAppName("beta.tango-sync"),
+		newrelic.ConfigLicense("b3e5f010b616aa389d1f34a771498824f710NRAL"),
 		newrelic.ConfigDistributedTracerEnabled(true),
 		newrelic.ConfigEnabled(false),
 	)
@@ -28,7 +28,7 @@ func Init() (*newrelic.Application, error) {
 func setupMasterEnvironment() (*newrelic.Application, error) {
 	return newrelic.NewApplication(
 		newrelic.ConfigAppName("master.tango-sync"),
-		newrelic.ConfigLicense("42f8705fa3ae7feb35621fc56b973691ee4cNRAL"),
+		newrelic.ConfigLicense("7fc1d8ac175efc2dd784a12442224e48443bNRAL"),
 		newrelic.ConfigDistributedTracerEnabled(true),
 		func(config *newrelic.Config) {
 			config.ErrorCollector.IgnoreStatusCodes = []int{400, 401, 403, 404, 405, 423, 424, 429}

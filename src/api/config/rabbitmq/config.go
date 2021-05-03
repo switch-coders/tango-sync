@@ -23,8 +23,8 @@ func Connect() (*amqp.Channel, error) {
 
 func setupEnvironment() (*amqp.Connection, error) {
 	scope := os.Getenv("SCOPE")
-	if strings.HasSuffix(scope, "beta") {
-		return amqp.Dial("amqps://zzstsozt:4HMR-rOwRRidMwRmz23Mej8umOuBwzTO@eagle.rmq.cloudamqp.com/zzstsozt")
+	if strings.HasSuffix(scope, "master") {
+		return amqp.Dial("amqps://dkjhcutt:G4mvE9HD9-_p4xxoRm74tSMU8EJctEMO@eagle.rmq.cloudamqp.com/dkjhcutt")
 	}
 
 	return amqp.Dial("amqps://zzstsozt:4HMR-rOwRRidMwRmz23Mej8umOuBwzTO@eagle.rmq.cloudamqp.com/zzstsozt")

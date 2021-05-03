@@ -34,10 +34,10 @@ func GetConnectionDataBase() *ConnectionData {
 }
 
 func (cd *ConnectionData) setupMasterConnectionData() *ConnectionData {
-	cd.Host = "ec2-3-91-127-228.compute-1.amazonaws.com"
-	cd.Password = "ecf48c2caafeacbbe259f68d49bbebf6e0de4df3d10eeb95a6f52529935d6f27"
-	cd.Username = "zkgvkqrdpvtrix"
-	cd.Schema = "df5ica15dgfqbo"
+	cd.Host = "ec2-54-224-120-186.compute-1.amazonaws.com"
+	cd.Password = "085e0729864a3343abf08af4f27e67c93d1a73ab724053b35914f087d5c207ca"
+	cd.Username = "qsdidhxtocenoh"
+	cd.Schema = "dcqrc5tjn0av78"
 	cd.SSL = "require"
 	return cd
 }
