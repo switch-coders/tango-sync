@@ -25,5 +25,5 @@ func Schedule() {
 	}
 
 	job.SingletonMode()
-	s.StartAsync()
+	//s.StartAsync()
 }
