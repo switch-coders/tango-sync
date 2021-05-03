@@ -9,6 +9,7 @@ import (
 
 const (
 	HerokuURL         = "https://tango-sync.herokuapp.com"
+	HerokuBetaURL     = "https://tango-sync-beta.herokuapp.com"
 	LocalURL          = "http://localhost:8080"
 	TangoBaseURL      = "https://tiendas.axoft.com/api/Aperture"
 	TiendaNubeBaseURL = "https://api.tiendanube.com/v1/%s"
@@ -23,9 +24,18 @@ func SetupEnvironment() {
 	if strings.HasSuffix(scope, "master") {
 		setupMasterEnvironment()
 	}
+
+	if strings.HasSuffix(scope, "beta") {
+		setupBetaEnvironment()
+	}
 }
 
 func setupMasterEnvironment() {
 	_ = os.Setenv("BASE_URL", HerokuURL)
+	sentry.Init()
+}
+
+func setupBetaEnvironment() {
+	_ = os.Setenv("BASE_URL", HerokuBetaURL)
 	sentry.Init()
 }
