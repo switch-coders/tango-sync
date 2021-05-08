@@ -11,15 +11,15 @@ import (
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
 )
 
-type Sync struct {
+type SyncStock struct {
 	SyncUseCase sync.UseCase
 }
 
-func (handler *Sync) Handle(c *gin.Context) {
+func (handler *SyncStock) Handle(c *gin.Context) {
 	infrastructure.ErrorWrapper(handler.handle, c)
 }
 
-func (handler *Sync) handle(c *gin.Context) *apierrors.APIError {
+func (handler *SyncStock) handle(c *gin.Context) *apierrors.APIError {
 	ctx := infrastructure.ContextFrom(c)
 
 	var r syncContract.Request
