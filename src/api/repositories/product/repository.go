@@ -2,7 +2,6 @@ package product
 
 import (
 	"context"
-
 	"github.com/getsentry/sentry-go"
 	"github.com/jinzhu/gorm"
 	"github.com/newrelic/go-agent/v3/newrelic"
@@ -20,12 +19,13 @@ func (r *Repository) UpdateOrCreate(ctx context.Context, p entities.Product) err
 
 	entity := new(product)
 	entity.SKU = p.Sku
-	entity.Stock = p.Stock
+	entity.Stock = &p.Stock
+	entity.Price = &p.Price
 
 	var err error
 
 	infrastructure.WrapDatastoreSegment("Postgres", "CREATE-UPDATE", transaction, func() {
-		err = r.DBClient.Where(product{SKU: p.Sku}).Assign(product{Stock: p.Stock}).FirstOrCreate(&entity).Error
+		err = r.DBClient.Save(&entity).Error
 	})
 
 	if err != nil {

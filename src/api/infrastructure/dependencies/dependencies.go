@@ -1,6 +1,9 @@
 package dependencies
 
 import (
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_stock"
+	"github.com/switch-coders/tango-sync/src/api/repositories/audit"
 	"os"
 
 	"github.com/switch-coders/tango-sync/src/api/config/database"
@@ -8,7 +11,6 @@ import (
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/get"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/sync"
-	"github.com/switch-coders/tango-sync/src/api/core/usecases/sync_by_product"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints/handlers/api"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints/handlers/consumer"
@@ -20,9 +22,11 @@ import (
 )
 
 type HandlerContainer struct {
-	Get           entrypoints.Handler
-	Sync          entrypoints.Handler
-	SyncByProduct entrypoints.Handler
+	Get         entrypoints.Handler
+	SyncStock   entrypoints.Handler
+	SyncPrice   entrypoints.Handler
+	UpdatePrice entrypoints.Handler
+	UpdateStock entrypoints.Handler
 }
 
 func Start() *HandlerContainer {
@@ -66,6 +70,10 @@ func Start() *HandlerContainer {
 		DBClient: db,
 	}
 
+	auditProvider := &audit.Repository{
+		DBClient: db,
+	}
+
 	// UseCases.
 	getUseCase := &get.Implementation{}
 
@@ -75,9 +83,16 @@ func Start() *HandlerContainer {
 		NotificationProvider: notificationProvider,
 	}
 
-	syncByProduct := &sync_by_product.Implementation{
+	updateStockUseCase := &update_stock.Implementation{
 		TNProvider:      tnProvider,
 		ProductProvider: productProvider,
+		AuditProvider:   auditProvider,
+	}
+
+	updatePriceUseCase := &update_price.Implementation{
+		TNProvider:      tnProvider,
+		ProductProvider: productProvider,
+		AuditProvider:   auditProvider,
 	}
 
 	// Handlers.
@@ -87,12 +102,20 @@ func Start() *HandlerContainer {
 		GetUseCase: getUseCase,
 	}
 
-	handlers.Sync = &jobs.Sync{
+	handlers.SyncStock = &jobs.SyncStock{
 		SyncUseCase: syncUseCase,
 	}
 
-	handlers.SyncByProduct = &consumer.SyncByProduct{
-		SyncByProductUseCase: syncByProduct,
+	handlers.SyncPrice = &jobs.SyncPrice{
+		SyncUseCase: syncUseCase,
+	}
+
+	handlers.UpdateStock = &consumer.UpdateStock{
+		UpdateStockUseCase: updateStockUseCase,
+	}
+
+	handlers.UpdatePrice = &consumer.UpdatePrice{
+		UpdatePriceUseCase: updatePriceUseCase,
 	}
 
 	return &handlers

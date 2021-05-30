@@ -1,4 +1,4 @@
-package filter
+package tango
 
 import "time"
 
@@ -8,7 +8,7 @@ type SearchStock struct {
 	LastUpdate            string
 }
 
-func NewSearchStocktango(lastUpdate *time.Time) SearchStock {
+func NewSearchStockEMC(lastUpdate *time.Time) SearchStock {
 	var date time.Time
 	if lastUpdate != nil {
 		date = lastUpdate.UTC()

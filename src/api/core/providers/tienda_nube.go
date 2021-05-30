@@ -8,6 +8,7 @@ import (
 )
 
 type TiendaNube interface {
-	UpdateProductVariant(ctx context.Context, product entities.Product) error
-	SearchStock(ctx context.Context, filter filter.SearchProduct) (*entities.Product, error)
+	UpdateProductStockVariant(ctx context.Context, product entities.Product) error
+	UpdateProductPriceVariant(ctx context.Context, product entities.Product) error
+	SearchProduct(ctx context.Context, filter filter.SearchProduct) (*entities.Product, error)
 }

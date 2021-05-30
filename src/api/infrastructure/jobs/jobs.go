@@ -13,17 +13,28 @@ func Schedule() {
 	baseURL := os.Getenv("BASE_URL")
 
 	// Repositories.
-	tangoSyncProvider := &tango_sync.Repository{
+	emcSyncProvider := &tango_sync.Repository{
 		BaseURL: baseURL,
 	}
 
 	s := gocron.NewScheduler(time.UTC)
 
-	job, err := s.Every(2).Hours().Do(tangoSyncProvider.ExecuteSync)
+	now := time.Now().UTC()
+	stockStartDate := now.Add(time.Minute * 30)
+	//priceStartDate := now.Add(time.Minute * 90)
+
+	jobSyncStock, err := s.Every(2).Hours().StartAt(stockStartDate).Do(emcSyncProvider.ExecuteStockSync)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	job.SingletonMode()
-	//s.StartAsync()
+	/*	jobSyncPrice, err := s.Every(2).Hours().StartAt(priceStartDate).Do(emcSyncProvider.ExecutePriceSync)
+		if err != nil {
+			fmt.Println(err)
+		}*/
+
+	jobSyncStock.SingletonMode()
+	//jobSyncPrice.SingletonMode()
+
+	s.StartAsync()
 }

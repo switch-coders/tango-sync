@@ -20,6 +20,19 @@ type stock struct {
 	} `json:"Data"`
 }
 
+type price struct {
+	Paging struct {
+		PageNumber int  `json:"PageNumber"`
+		PageSize   int  `json:"PageSize"`
+		MoreData   bool `json:"MoreData"`
+	} `json:"Paging"`
+	Data []struct {
+		PriceListNumber int     `json:"PriceListNumber"`
+		SkuCode         string  `json:"SKUCode"`
+		Price           float64 `json:"Price"`
+	} `json:"Data"`
+}
+
 func (s *stock) GetEntity() []entities.Stock {
 	stocks := make([]entities.Stock, len(s.Data))
 
@@ -37,6 +50,26 @@ func (s *stock) GetEntity() []entities.Stock {
 
 		if stocks[i].Quantity < 0 {
 			stocks[i].Quantity = 0
+		}
+	}
+
+	return stocks
+}
+
+func (s *price) GetPriceEntity() []entities.Price {
+	stocks := make([]entities.Price, len(s.Data))
+
+	for i := 0; i < len(s.Data); i++ {
+		data := s.Data[i]
+
+		stocks[i] = entities.Price{
+			PriceListNumber: data.PriceListNumber,
+			SkuCode:         data.SkuCode,
+			Price:           data.Price,
+		}
+
+		if stocks[i].Price < 0 {
+			stocks[i].Price = 0
 		}
 	}
 

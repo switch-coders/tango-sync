@@ -3,17 +3,17 @@ package notification
 import (
 	"context"
 	"encoding/json"
-
 	"github.com/getsentry/sentry-go"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/streadway/amqp"
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
+	"github.com/switch-coders/tango-sync/src/api/core/providers"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
 )
 
 type Repository struct {
-	Channel *amqp.Channel
+	Channel providers.Channel
 }
 
 func (r *Repository) Notify(ctx context.Context, n entities.Notification) error {

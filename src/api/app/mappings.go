@@ -17,11 +17,13 @@ func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerCont
 }
 
 func configureJobsMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {
-	groupJobs := router.Group("/jobs")
-	groupJobs.POST("tn/sync/stock", handlers.Sync.Handle)
+	groupJobs := router.Group("/jobs/sync")
+	groupJobs.POST("stock", handlers.SyncStock.Handle)
+	groupJobs.POST("price", handlers.SyncPrice.Handle)
 }
 
 func configureConsumersMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {
 	groupConsumers := router.Group("/consumer")
-	groupConsumers.POST("tn/sync/stock", handlers.SyncByProduct.Handle)
+	groupConsumers.POST("tn/update/stock", handlers.UpdateStock.Handle)
+	groupConsumers.POST("tn/update/price", handlers.UpdatePrice.Handle)
 }

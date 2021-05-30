@@ -1,11 +1,11 @@
 package database
 
 import (
+	"github.com/switch-coders/tango-sync/src/api/config/database/models"
 	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-	"github.com/switch-coders/tango-sync/src/api/config/database/models"
 )
 
 func Connect() (Client *gorm.DB, err error) {
@@ -22,7 +22,7 @@ func Connect() (Client *gorm.DB, err error) {
 	Client.DB().SetMaxOpenConns(50)
 	Client.SingularTable(true)
 
-	Client.AutoMigrate(&models.Product{})
+	Client.AutoMigrate(&models.Product{}, &models.Audit{})
 
 	return
 }

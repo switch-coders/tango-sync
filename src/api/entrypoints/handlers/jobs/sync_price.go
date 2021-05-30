@@ -1,25 +1,24 @@
 package jobs
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	syncContract "github.com/switch-coders/tango-sync/src/api/core/contracts/sync"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/errors/apierrors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/sync"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
+	"net/http"
 )
 
-type SyncStock struct {
+type SyncPrice struct {
 	SyncUseCase sync.UseCase
 }
 
-func (handler *SyncStock) Handle(c *gin.Context) {
+func (handler *SyncPrice) Handle(c *gin.Context) {
 	infrastructure.ErrorWrapper(handler.handle, c)
 }
 
-func (handler *SyncStock) handle(c *gin.Context) *apierrors.APIError {
+func (handler *SyncPrice) handle(c *gin.Context) *apierrors.APIError {
 	ctx := infrastructure.ContextFrom(c)
 
 	var r syncContract.Request
@@ -28,7 +27,7 @@ func (handler *SyncStock) handle(c *gin.Context) *apierrors.APIError {
 		return apierrors.NewBadRequest(errors.ErrorBindingRequest.GetMessage(), err.Error())
 	}
 
-	err = handler.SyncUseCase.Execute(ctx, r.LastUpdate)
+	err = handler.SyncUseCase.Price(ctx, r.LastUpdate)
 	if err != nil {
 		return apierrors.GetCommonsAPIError(err)
 	}

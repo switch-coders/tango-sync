@@ -1,4 +1,4 @@
-package sync_by_product
+package stock
 
 type Request struct {
 	SKU   string  `json:"sku" binding:"required"`

@@ -1,21 +1,27 @@
 package product
 
 import (
-	"time"
-
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 )
 
 type product struct {
-	SKU       string    `gorm:"type:varchar(150);not null"`
-	Stock     int       `gorm:"not null"`
-	CreatedAt time.Time `gorm:"type:datetime;not null"`
-	UpdatedAt time.Time `gorm:"type:datetime;not null"`
+	SKU   string   `gorm:"PRIMARY_KEY;type:varchar(150);not null"`
+	Stock *int     `gorm:"null"`
+	Price *float64 `gorm:"null"`
 }
 
 func (p product) toEntity() *entities.Product {
-	return &entities.Product{
-		Stock: p.Stock,
-		Sku:   p.SKU,
+	var product = entities.Product{
+		Sku: p.SKU,
 	}
+
+	if p.Price != nil {
+		product.Price = *p.Price
+	}
+
+	if p.Stock != nil {
+		product.Stock = *p.Stock
+	}
+
+	return &product
 }

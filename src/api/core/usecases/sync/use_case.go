@@ -6,5 +6,6 @@ import (
 )
 
 type UseCase interface {
-	Execute(ctx context.Context, lastUpdate *time.Time) error
+	Stock(ctx context.Context, lastUpdate *time.Time) error
+	Price(ctx context.Context, lastUpdate *time.Time) error
 }
