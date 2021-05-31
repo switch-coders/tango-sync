@@ -33,6 +33,12 @@ type price struct {
 	} `json:"Data"`
 }
 
+type authentication struct {
+	Status  int         `json:"Status"`
+	Message string      `json:"Message"`
+	IsOk    bool        `json:"isOk"`
+}
+
 func (s *stock) GetEntity() []entities.Stock {
 	stocks := make([]entities.Stock, len(s.Data))
 

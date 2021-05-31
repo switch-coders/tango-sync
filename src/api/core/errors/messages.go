@@ -21,6 +21,7 @@ const (
 	ErrorBindingRequest         Message = "Error binding request."
 	ErrorForbidden              Message = "Error forbidden action without authentication."
 	ErrorUnmarshallingResponse  Message = "Error unmarshalling response."
+	ErrorInvalidTangoToken      Message = "Error invalid tango access token."
 	ErrorConnectingAMQP         Message = "Error to connecting amqp server."
 	ErrorOpeningChannel         Message = "Failed to open a channel."
 	ErrorFailsToPublishRabbitMQ Message = "Failed to publish message."

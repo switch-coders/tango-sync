@@ -10,6 +10,8 @@ func GetError(err error, messages ...string) error {
 		return NewInternalServerError(strings.Join(messages, " "))
 	case DependencyError:
 		return NewDependencyError(strings.Join(messages, " "))
+	case ForbiddenError:
+		return NewForbiddenError(strings.Join(messages, " "))
 	}
 	return err
 }

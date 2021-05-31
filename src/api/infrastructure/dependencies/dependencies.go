@@ -1,8 +1,10 @@
 package dependencies
 
 import (
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/integration"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_stock"
+	"github.com/switch-coders/tango-sync/src/api/repositories/account"
 	"github.com/switch-coders/tango-sync/src/api/repositories/audit"
 	"os"
 
@@ -23,6 +25,7 @@ import (
 
 type HandlerContainer struct {
 	Get         entrypoints.Handler
+	Integration entrypoints.Handler
 	SyncStock   entrypoints.Handler
 	SyncPrice   entrypoints.Handler
 	UpdatePrice entrypoints.Handler
@@ -74,6 +77,10 @@ func Start() *HandlerContainer {
 		DBClient: db,
 	}
 
+	accountProvider := &account.Repository{
+		DBClient: db,
+	}
+
 	// UseCases.
 	getUseCase := &get.Implementation{}
 
@@ -95,11 +102,19 @@ func Start() *HandlerContainer {
 		AuditProvider:   auditProvider,
 	}
 
+/*	integrationUseCase := &integration.Implementation{
+		TangoProvider:   tangoProvider,
+		AccountProvider: accountProvider,
+	}
+*/
 	// Handlers.
 	handlers := HandlerContainer{}
 
 	handlers.Get = &api.Get{
 		GetUseCase: getUseCase,
+	}
+
+	handlers.Integration = &api.Integration{
 	}
 
 	handlers.SyncStock = &jobs.SyncStock{

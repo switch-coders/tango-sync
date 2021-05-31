@@ -22,7 +22,7 @@ func Connect() (Client *gorm.DB, err error) {
 	Client.DB().SetMaxOpenConns(50)
 	Client.SingularTable(true)
 
-	Client.AutoMigrate(&models.Product{}, &models.Audit{})
+	Client.AutoMigrate(&models.Product{}, &models.Audit{}, &models.Account{})
 
 	return
 }

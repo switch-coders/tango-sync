@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure/dependencies"
+	"net/http"
 )
 
 func ConfigureMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {
@@ -12,8 +13,15 @@ func ConfigureMappings(router *gin.Engine, handlers *dependencies.HandlerContain
 }
 
 func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {
+	router.LoadHTMLGlob("./templates/*")
+	router.Static("/assets", "./assets")
+
 	group := router.Group("/")
 	group.GET("ping", handlers.Get.Handle)
+	group.GET("index", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
+	group.POST("integration", handlers.Integration.Handle)
 }
 
 func configureJobsMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {

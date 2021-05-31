@@ -10,4 +10,5 @@ import (
 type Tango interface {
 	SearchStock(ctx context.Context, f tango.SearchStock) ([]entities.Stock, error)
 	SearchPrice(ctx context.Context, f tango.SearchPrice) ([]entities.Price, error)
+	Authenticate(ctx context.Context, t string) error
 }

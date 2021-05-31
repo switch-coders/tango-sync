@@ -15,3 +15,11 @@ type Audit struct {
 	Value     string `gorm:"type:varchar(100);not null"`
 	CreatedAt *time.Time
 }
+
+type Account struct {
+	TangoKey string `gorm:"PRIMARY_KEY;type:varchar(100);not null"`
+	Name     string `gorm:"type:varchar(40);not null"`
+	Email    string `gorm:"type:varchar(100);not null"`
+	JobSync  bool
+	JobPrice bool
+}

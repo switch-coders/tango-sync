@@ -144,3 +144,52 @@ func (r *Repository) SearchPrice(ctx context.Context, f tango.SearchPrice) ([]en
 
 	return prices, nil
 }
+
+func (r *Repository) Authenticate(ctx context.Context, t string) error {
+	transaction := newrelic.FromContext(ctx)
+
+	client := resty.New()
+	url := r.TangoBaseURL + "/dummy"
+
+	var restResp *resty.Response
+	var err error
+
+	infrastructure.WrapExternalSegmentWithAlias(transaction, url, "TANGO_AUTHENTICATION", func() {
+		restResp, err = client.R().
+			SetHeader("accesstoken", t).
+			SetHeader("Content-Type", "application/json").
+			SetHeader("Accept", "application/json").
+			SetBody([]byte{}).
+			Post(url)
+	})
+
+	if err != nil {
+		sentry.CaptureException(err)
+
+		return errors.NewRepositoryError(errors.ErrorGettingResource.GetMessageWithParams(errors.Parameters{
+			"resource": "authenticate-tango",
+		}))
+	}
+
+	if restResp.IsError() {
+		return errors.NewDependencyError(restResp.String())
+	}
+
+	var resp authentication
+	err = json.Unmarshal(restResp.Body(), &resp)
+	if err != nil {
+		sentry.CaptureException(err)
+
+		return errors.NewParsingError(errors.ErrorUnmarshallingResponse.GetMessageWithParams(errors.Parameters{
+			"resource": "authenticate-tango",
+		}))
+	}
+
+	if !resp.IsOk {
+		return errors.NewForbiddenError(errors.ErrorInvalidTangoToken.GetMessageWithParams(errors.Parameters{
+			"resource": "authenticate-tango",
+		}))
+	}
+
+	return nil
+}
