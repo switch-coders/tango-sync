@@ -21,6 +21,10 @@ func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerCont
 	group.GET("index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
+	group.GET("register", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "register.html", gin.H{})
+	})
+	group.POST("registration", handlers.Registration.Handle)
 	group.POST("integration", handlers.Integration.Handle)
 }
 
