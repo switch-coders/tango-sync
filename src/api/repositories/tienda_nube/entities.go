@@ -6,6 +6,13 @@ import (
 	"strings"
 )
 
+type account struct {
+	AccessToken string `json:"access_token"`
+	TokenType   string `json:"token_type"`
+	Scope       string `json:"scope"`
+	UserID      int64  `json:"user_id"`
+}
+
 type products []struct {
 	Variants []variants `json:"variants"`
 }
@@ -38,4 +45,11 @@ func (p products) toEntity(sku string) *entities.Product {
 	}
 
 	return nil
+}
+
+func (a account) toEntity() *entities.TnAccount {
+	return &entities.TnAccount{
+		AccessToken: a.AccessToken,
+		UserID:      a.UserID,
+	}
 }

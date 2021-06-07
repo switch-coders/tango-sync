@@ -28,6 +28,9 @@ func SetupEnvironment() {
 	if strings.HasSuffix(scope, "beta") {
 		setupBetaEnvironment()
 	}
+
+	_ = os.Setenv("TN_SECRET", "MHgj0k7L7w37KtDprnPvHniE6LNcmMh9RbGebTf2OIfSg8Rv")
+	_ = os.Setenv("TN_APP_ID", "2736")
 }
 
 func setupMasterEnvironment() {

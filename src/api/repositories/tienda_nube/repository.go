@@ -20,6 +20,55 @@ type Repository struct {
 	TNAuthentication string
 	TNUserAgent      string
 	TNNumber         string
+	TNSecret         string
+	TNAppID          string
+}
+
+func (r *Repository) Authorize(ctx context.Context, code string) (*entities.TnAccount, error) {
+	transaction := newrelic.FromContext(ctx)
+
+	client := resty.New()
+
+	url := fmt.Sprintf("https://www.tiendanube.com/apps/authorize/token")
+
+	var restResp *resty.Response
+	var err error
+
+	infrastructure.WrapExternalSegmentWithAlias(transaction, url, "AUTHORIZE_TN_ACCOUNT", func() {
+		restResp, err = client.R().
+			SetHeader("Content-Type", "application/x-www-form-urlencoded").
+			SetFormData(map[string]string{
+				"client_id":     r.TNAppID,
+				"client_secret": r.TNSecret,
+				"grant_type":    "authorization_code",
+				"code":          code,
+			}).
+			Post(url)
+	})
+
+	if err != nil {
+		sentry.CaptureException(err)
+
+		return nil, errors.NewRepositoryError(errors.ErrorGettingResource.GetMessageWithParams(errors.Parameters{
+			"resource": "search-tn-product",
+		}))
+	}
+
+	if restResp.IsError() {
+		return nil, errors.NewRepositoryError(restResp.String())
+	}
+
+	var resp account
+	err = json.Unmarshal(restResp.Body(), &resp)
+	if err != nil {
+		sentry.CaptureException(err)
+
+		return nil, errors.NewParsingError(errors.ErrorUnmarshallingResponse.GetMessageWithParams(errors.Parameters{
+			"resource": "search-tn-product",
+		}))
+	}
+
+	return resp.toEntity(), nil
 }
 
 func (r *Repository) SearchProduct(ctx context.Context, filter filter.SearchProduct) (*entities.Product, error) {

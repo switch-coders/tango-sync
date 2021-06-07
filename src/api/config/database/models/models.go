@@ -17,9 +17,10 @@ type Audit struct {
 }
 
 type Account struct {
-	TangoKey string `gorm:"PRIMARY_KEY;type:varchar(100);not null"`
-	Name     string `gorm:"type:varchar(40);not null"`
-	Email    string `gorm:"type:varchar(100);not null"`
-	JobSync  bool
-	JobPrice bool
+	ID       int64  `gorm:"PRIMARY_KEY;AUTO_INCREMENT"`
+	TangoKey string `gorm:"type:varchar(100);null"`
+	Name     string `gorm:"type:varchar(40);null"`
+	Email    string `gorm:"type:varchar(100); null"`
+	TnKey    string `gorm:"type:varchar(100); null"`
+	TnClient string `gorm:"type:varchar(100); null"`
 }

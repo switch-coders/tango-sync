@@ -24,6 +24,7 @@ func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerCont
 	group.GET("register", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "register.html", gin.H{})
 	})
+	group.GET("tn/oauth", handlers.TnAuth.Handle)
 	group.POST("registration", handlers.Registration.Handle)
 	group.POST("integration", handlers.Integration.Handle)
 }

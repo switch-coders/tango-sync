@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -33,6 +34,15 @@ func GetCallerID(c *gin.Context) (int64, error) {
 	}
 
 	return id, nil
+}
+
+func GetCode(c *gin.Context) (string, error) {
+	code := c.Request.Header.Get("code")
+	if code == "" {
+		return "", fmt.Errorf("fails to get code")
+	}
+
+	return code, nil
 }
 
 //WithRequestContext returns a context.Context from a gin.Context

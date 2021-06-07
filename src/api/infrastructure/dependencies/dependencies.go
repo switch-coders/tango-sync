@@ -1,8 +1,11 @@
 package dependencies
 
 import (
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/integration"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/tn_oauth"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_stock"
+	"github.com/switch-coders/tango-sync/src/api/repositories/account"
 	"github.com/switch-coders/tango-sync/src/api/repositories/audit"
 	"os"
 
@@ -25,6 +28,7 @@ type HandlerContainer struct {
 	Get          entrypoints.Handler
 	Integration  entrypoints.Handler
 	Registration entrypoints.Handler
+	TnAuth       entrypoints.Handler
 	SyncStock    entrypoints.Handler
 	SyncPrice    entrypoints.Handler
 	UpdatePrice  entrypoints.Handler
@@ -50,6 +54,8 @@ func Start() *HandlerContainer {
 	tnAuthentication := os.Getenv("TN_AUTHENTICATION")
 	tnUseAgent := os.Getenv("TN_USER_AGENT")
 	tnNumber := os.Getenv("TN_NUMBER")
+	tnSecret := os.Getenv("TN_SECRET")
+	tnAppID := os.Getenv("TN_APP_ID")
 
 	// Repositories.
 	notificationProvider := &notification.Repository{
@@ -66,6 +72,8 @@ func Start() *HandlerContainer {
 		TNAuthentication: tnAuthentication,
 		TNUserAgent:      tnUseAgent,
 		TNNumber:         tnNumber,
+		TNSecret:         tnSecret,
+		TNAppID:          tnAppID,
 	}
 
 	productProvider := &product.Repository{
@@ -76,9 +84,9 @@ func Start() *HandlerContainer {
 		DBClient: db,
 	}
 
-	/*accountProvider := &account.Repository{
+	accountProvider := &account.Repository{
 		DBClient: db,
-	}*/
+	}
 
 	// UseCases.
 	getUseCase := &get.Implementation{}
@@ -101,11 +109,15 @@ func Start() *HandlerContainer {
 		AuditProvider:   auditProvider,
 	}
 
-	/*	integrationUseCase := &integration.Implementation{
-			TangoProvider:   tangoProvider,
-			AccountProvider: accountProvider,
-		}
-	*/
+	tnAuthUseCase := &tn_oauth.Implementation{
+		TnProvider: tnProvider,
+	}
+
+	integrationUseCase := &integration.Implementation{
+		TangoProvider:   tangoProvider,
+		AccountProvider: accountProvider,
+	}
+
 	// Handlers.
 	handlers := HandlerContainer{}
 
@@ -114,6 +126,15 @@ func Start() *HandlerContainer {
 	}
 
 	handlers.Integration = &api.Integration{
+		TnAppID: tnAppID,
+	}
+
+	handlers.Registration = &api.Registration{
+		IntegrationUseCase: integrationUseCase,
+	}
+
+	handlers.TnAuth = &api.TnAuth{
+		TnAuthUseCase: tnAuthUseCase,
 	}
 
 	handlers.SyncStock = &jobs.SyncStock{

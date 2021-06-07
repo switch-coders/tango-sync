@@ -19,6 +19,7 @@ const (
 	ErrorUserNotFound           Message = "Error user doesn't exists."
 	ErrorDataBaseConnection     Message = "Error trying to connect to database."
 	ErrorBindingRequest         Message = "Error binding request."
+	ErrorMissingCode            Message = "Error missing tienda nube ouath code."
 	ErrorForbidden              Message = "Error forbidden action without authentication."
 	ErrorUnmarshallingResponse  Message = "Error unmarshalling response."
 	ErrorInvalidTangoToken      Message = "Error invalid tango access token."

@@ -8,6 +8,7 @@ import (
 )
 
 type TiendaNube interface {
+	Authorize(ctx context.Context, code string) (*entities.TnAccount, error)
 	UpdateProductStockVariant(ctx context.Context, product entities.Product) error
 	UpdateProductPriceVariant(ctx context.Context, product entities.Product) error
 	SearchProduct(ctx context.Context, filter filter.SearchProduct) (*entities.Product, error)
