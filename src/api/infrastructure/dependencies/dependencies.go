@@ -1,23 +1,23 @@
 package dependencies
 
 import (
-	"github.com/switch-coders/tango-sync/src/api/core/usecases/integration"
-	"github.com/switch-coders/tango-sync/src/api/core/usecases/tn_oauth"
-	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
-	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_stock"
-	"github.com/switch-coders/tango-sync/src/api/repositories/account"
-	"github.com/switch-coders/tango-sync/src/api/repositories/audit"
 	"os"
 
 	"github.com/switch-coders/tango-sync/src/api/config/database"
 	"github.com/switch-coders/tango-sync/src/api/config/rabbitmq"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/get"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/integration"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/sync"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/tn_auth"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
+	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_stock"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints/handlers/api"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints/handlers/consumer"
 	"github.com/switch-coders/tango-sync/src/api/entrypoints/handlers/jobs"
+	"github.com/switch-coders/tango-sync/src/api/repositories/account"
+	"github.com/switch-coders/tango-sync/src/api/repositories/audit"
 	"github.com/switch-coders/tango-sync/src/api/repositories/notification"
 	"github.com/switch-coders/tango-sync/src/api/repositories/product"
 	"github.com/switch-coders/tango-sync/src/api/repositories/tango"
@@ -109,7 +109,7 @@ func Start() *HandlerContainer {
 		AuditProvider:   auditProvider,
 	}
 
-	tnAuthUseCase := &tn_oauth.Implementation{
+	tnAuthUseCase := &tn_auth.Implementation{
 		TnProvider: tnProvider,
 	}
 

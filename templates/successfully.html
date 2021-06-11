@@ -25,44 +25,16 @@
 
 <div class="limiter">
     <div class="container-login100">
-
         <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="assets/images/img-01.png" alt="IMG">
+            <div class="alert alert-success" role="alert">
+                Integración exitosa!
             </div>
-
-            <form action="/integration" class="login100-form validate-form" method="post">
-					<span class="login100-form-title">
-						Tango Sync
-					</span>
-
-                <div class="container-login100-form-btn">
-                    <input type="submit" value="Integrar con Tienda Nube" class="login100-form-btn">
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <input type="submit" value="Integrar con Mercadolibre" class="login100-ml-form-btn">
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <input type="submit" value="Integrar con Megatone" class="login100-mg-form-btn">
-                </div>
-
-                <div class="container-login100-form-btn">
-                    <input type="submit" value="Integrar con Fravega" class="login100-fv-form-btn">
-                </div>
-
-                <div class="text-center p-t-136">
-                </div>
-            </form>
         </div>
     </div>
 </div>
 
-
 <!--===============================================================================================-->
 <script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script src=“https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js”></script>
 <!--===============================================================================================-->
 <script src="assets/vendor/bootstrap/js/popper.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -78,23 +50,5 @@
 <!--===============================================================================================-->
 <script src="assets/js/main.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function showAlert() {
-        var statusCookie = Cookies.get('integration_success');
-        if (statusCookie == "true") {
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: true,
-                timer: 1500
-            })
-        }
-    }
-
-    $(document).ready(function () {
-        showAlert();
-    });
-</script>
 </body>
 </html>

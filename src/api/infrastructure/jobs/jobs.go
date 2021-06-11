@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-co-op/gocron"
+
 	"github.com/switch-coders/tango-sync/src/api/repositories/tango_sync"
 )
 

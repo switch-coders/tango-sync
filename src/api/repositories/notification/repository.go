@@ -3,9 +3,11 @@ package notification
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/newrelic/go-agent/v3/newrelic"
 	"github.com/streadway/amqp"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/providers"

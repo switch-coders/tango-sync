@@ -3,6 +3,7 @@ package update_price
 import (
 	"context"
 	goErrors "errors"
+
 	priceContract "github.com/switch-coders/tango-sync/src/api/core/contracts/sync_by_product/price"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/constants"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/filter"

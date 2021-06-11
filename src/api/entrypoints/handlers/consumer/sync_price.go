@@ -1,13 +1,15 @@
 package consumer
 
 import (
+	"net/http"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
+
 	"github.com/switch-coders/tango-sync/src/api/core/contracts/sync_by_product/price"
 	"github.com/switch-coders/tango-sync/src/api/core/errors/apierrors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/update_price"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"net/http"
 )
 
 type UpdatePrice struct {

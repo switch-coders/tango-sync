@@ -2,9 +2,11 @@ package product
 
 import (
 	"context"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/jinzhu/gorm"
 	"github.com/newrelic/go-agent/v3/newrelic"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"

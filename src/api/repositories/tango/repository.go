@@ -3,14 +3,16 @@ package tango
 import (
 	"context"
 	"encoding/json"
+	"strconv"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/go-resty/resty/v2"
 	"github.com/newrelic/go-agent/v3/newrelic"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/filter/tango"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"strconv"
 )
 
 type Repository struct {

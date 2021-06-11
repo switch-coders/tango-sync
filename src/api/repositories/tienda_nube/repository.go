@@ -4,15 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/getsentry/sentry-go"
 	"github.com/go-resty/resty/v2"
 	"github.com/newrelic/go-agent/v3/newrelic"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/filter"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"net/http"
-	"strings"
 )
 
 type Repository struct {

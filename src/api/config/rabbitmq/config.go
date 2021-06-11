@@ -1,12 +1,14 @@
 package rabbitmq
 
 import (
+	"os"
+	"strings"
+
 	"github.com/streadway/amqp"
+
 	"github.com/switch-coders/tango-sync/src/api/config/rabbitmq/mock"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/providers"
-	"os"
-	"strings"
 )
 
 func Connect() (providers.Channel, error) {

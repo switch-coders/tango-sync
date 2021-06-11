@@ -3,6 +3,7 @@ package update_stock
 import (
 	"context"
 	goErrors "errors"
+
 	stockContract "github.com/switch-coders/tango-sync/src/api/core/contracts/sync_by_product/stock"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/constants"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/filter"

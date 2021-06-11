@@ -1,13 +1,15 @@
 package jobs
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
 	syncContract "github.com/switch-coders/tango-sync/src/api/core/contracts/sync"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/errors/apierrors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/sync"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"net/http"
 )
 
 type SyncStock struct {

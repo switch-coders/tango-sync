@@ -2,10 +2,12 @@ package api
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
 	"github.com/switch-coders/tango-sync/src/api/core/errors/apierrors"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"net/http"
 )
 
 type Integration struct {

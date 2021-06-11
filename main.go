@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/newrelic/go-agent/v3/integrations/nrgin"
+
 	"github.com/switch-coders/tango-sync/src/api/app"
 	"github.com/switch-coders/tango-sync/src/api/config"
 	"github.com/switch-coders/tango-sync/src/api/config/new_relic"

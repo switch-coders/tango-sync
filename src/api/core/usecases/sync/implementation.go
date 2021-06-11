@@ -3,6 +3,8 @@ package sync
 import (
 	"context"
 	goErrors "errors"
+	"time"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/entities/filter/tango"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
@@ -10,7 +12,6 @@ import (
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
 	"github.com/switch-coders/tango-sync/src/api/util/price"
 	"github.com/switch-coders/tango-sync/src/api/util/stock"
-	"time"
 )
 
 type Implementation struct {

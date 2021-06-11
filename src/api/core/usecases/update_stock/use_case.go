@@ -2,6 +2,7 @@ package update_stock
 
 import (
 	"context"
+
 	"github.com/switch-coders/tango-sync/src/api/core/contracts/sync_by_product/stock"
 )
 

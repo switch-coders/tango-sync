@@ -1,13 +1,14 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
 	integrationContract "github.com/switch-coders/tango-sync/src/api/core/contracts/integration"
-	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/errors/apierrors"
 	"github.com/switch-coders/tango-sync/src/api/core/usecases/integration"
 	"github.com/switch-coders/tango-sync/src/api/infrastructure"
-	"net/http"
 )
 
 type Registration struct {
@@ -24,24 +25,29 @@ func (handler *Registration) handle(c *gin.Context) *apierrors.APIError {
 	var request integrationContract.Request
 	err := c.ShouldBind(&request)
 	if err != nil {
-		return apierrors.NewBadRequest(errors.ErrorBindingRequest.GetMessage(), err.Error())
+		c.Redirect(http.StatusMovedPermanently, "/error")
+		return nil
 	}
 
 	request.TnUserID, err = c.Cookie("tn_user_id")
 	if err != nil {
-		return apierrors.NewBadRequest(errors.ErrorBindingRequest.GetMessage(), err.Error())
+		c.Redirect(http.StatusMovedPermanently, "/error")
+		return nil
 	}
 
 	request.TnAccessToken, err = c.Cookie("tn_token")
 	if err != nil {
-		return apierrors.NewBadRequest(errors.ErrorBindingRequest.GetMessage(), err.Error())
+		c.Redirect(http.StatusMovedPermanently, "/error")
+		return nil
 	}
 
 	err = handler.IntegrationUseCase.Execute(ctx, request)
 	if err != nil {
-		return apierrors.GetCommonsAPIError(err)
+		c.Redirect(http.StatusMovedPermanently, "/error")
+		return nil
 	}
 
-	c.Status(http.StatusOK)
+	c.SetCookie("integration_success", "true", ttl, "", "", true, true)
+	c.Redirect(http.StatusMovedPermanently, "/index")
 	return nil
 }

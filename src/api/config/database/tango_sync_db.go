@@ -1,11 +1,12 @@
 package database
 
 import (
-	"github.com/switch-coders/tango-sync/src/api/config/database/models"
 	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+
+	"github.com/switch-coders/tango-sync/src/api/config/database/models"
 )
 
 func Connect() (Client *gorm.DB, err error) {

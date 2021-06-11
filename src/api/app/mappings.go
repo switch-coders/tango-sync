@@ -1,9 +1,11 @@
 package app
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/switch-coders/tango-sync/src/api/infrastructure/dependencies"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	"github.com/switch-coders/tango-sync/src/api/infrastructure/dependencies"
 )
 
 func ConfigureMappings(router *gin.Engine, handlers *dependencies.HandlerContainer) {
@@ -19,10 +21,17 @@ func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerCont
 	group := router.Group("/")
 	group.GET("ping", handlers.Get.Handle)
 	group.GET("index", func(c *gin.Context) {
+		c.SetCookie("integration_success", "true", 200, "", "", true, true)
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 	group.GET("register", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "register.html", gin.H{})
+	})
+	group.GET("successfully", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "successfully.html", gin.H{})
+	})
+	group.GET("error", func(c *gin.Context) {
+		c.HTML(http.StatusInternalServerError, "error.html", gin.H{})
 	})
 	group.GET("tn/oauth", handlers.TnAuth.Handle)
 	group.POST("registration", handlers.Registration.Handle)

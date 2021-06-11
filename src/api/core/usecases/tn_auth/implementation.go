@@ -1,7 +1,8 @@
-package tn_oauth
+package tn_auth
 
 import (
 	"context"
+
 	"github.com/switch-coders/tango-sync/src/api/core/entities"
 	"github.com/switch-coders/tango-sync/src/api/core/errors"
 	"github.com/switch-coders/tango-sync/src/api/core/providers"
@@ -13,7 +14,7 @@ type Implementation struct {
 }
 
 func (uc *Implementation) Execute(ctx context.Context, code string) (*entities.TnAccount, error) {
-	ctx = context.WithValue(ctx, infrastructure.ActionKey, "tn_oauth")
+	ctx = context.WithValue(ctx, infrastructure.ActionKey, "tn_auth")
 
 	account, err := uc.TnProvider.Authorize(ctx, code)
 	if err != nil {

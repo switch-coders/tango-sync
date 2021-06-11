@@ -1,8 +1,9 @@
 package account
 
 import (
-	"github.com/switch-coders/tango-sync/src/api/core/contracts/integration"
 	"strconv"
+
+	"github.com/switch-coders/tango-sync/src/api/core/contracts/integration"
 )
 
 type account struct {
