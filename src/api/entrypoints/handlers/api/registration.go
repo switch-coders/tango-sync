@@ -47,7 +47,7 @@ func (handler *Registration) handle(c *gin.Context) *apierrors.APIError {
 		return nil
 	}
 
-	c.SetCookie("integration_success", "true", ttl, "", "", true, true)
+	c.SetCookie("integration_success", "true", 200, "", "", false, false)
 	c.Redirect(http.StatusMovedPermanently, "/index")
 	return nil
 }

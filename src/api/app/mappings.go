@@ -21,7 +21,6 @@ func configureApiMappings(router *gin.Engine, handlers *dependencies.HandlerCont
 	group := router.Group("/")
 	group.GET("ping", handlers.Get.Handle)
 	group.GET("index", func(c *gin.Context) {
-		c.SetCookie("integration_success", "true", 200, "", "", true, true)
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 	group.GET("register", func(c *gin.Context) {
